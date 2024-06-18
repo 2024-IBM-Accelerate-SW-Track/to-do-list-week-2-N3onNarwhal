@@ -7,15 +7,34 @@ class AddTodo extends Component {
     super();
     this.state = {
       content: "",
+      date: "",
+      preCondition: "",
+      acceptCondition: ""
     };
   }
   // The handleChange function updates the react state with the new input value provided from the user.
   // "event" is the defined action a user takes. In this case, the event is triggered when the user types something
   // into the text field.
   handleChange = (event) => {
-    this.setState({
-      content: event.target.value,
-    });
+    let inputName = event.target.name;
+    if (inputName==="Add New Item") {
+      this.setState({
+        content: event.target.value,
+        date: Date().toLocaleString('en-US'),
+      });
+    }
+    else if (inputName==="Pre-Condition") {
+      this.setState({
+        preCondition: event.target.value,
+        date: Date().toLocaleString('en-US'),
+      });
+    }
+    else if (inputName==="Acceptance Condition") {
+      this.setState({
+        acceptCondition: event.target.value,
+        date: Date().toLocaleString('en-US'),
+      });
+    }
   };
   // The handleSubmit function collects the forms input and puts it into the react state.
   // event.preventDefault() is called to prevents default event behavior like refreshing the browser.
@@ -27,6 +46,9 @@ class AddTodo extends Component {
       this.props.addTodo(this.state);
       this.setState({
         content: "",
+        date: "",
+        preCondition:"",
+        acceptCondition:""
       });
     }
   };
@@ -42,13 +64,31 @@ class AddTodo extends Component {
       <div>
         <TextField
           label="Add New Item"
+          name="Add New Item"
           variant="outlined"
           onChange={this.handleChange}
           value={this.state.content}
           data-testid="new-item-textfield"
+          style={{marginTop:10}}
+        />
+        <TextField 
+          label="Pre-Condition"
+          name="Pre-Condition"
+          variant="outlined"
+          onChange={this.handleChange}
+          value={this.state.preCondition}
+          style={{marginTop:10}}
+        />
+        <TextField 
+          label="Acceptance Condition"
+          name="Acceptance Condition"
+          variant="outlined"
+          onChange={this.handleChange}
+          value={this.state.acceptCondition}
+          style={{marginTop:10}}
         />
         <Button
-          style={{ marginLeft: "10px" }}
+          style={{ marginLeft: "10px", marginTop: "10px"}}
           onClick={this.handleSubmit}
           variant="contained"
           color="primary"
